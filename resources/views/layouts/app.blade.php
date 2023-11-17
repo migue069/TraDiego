@@ -14,25 +14,15 @@
 
     </head>
     <body class="bg-gray-100">
-        <header class="p-5 border-b bg-white shadow flex justify-between content-center items-center">
-            <h1 class="text-3xl font-black">
-                Devstagram
-            </h1>
-            <div class=" flex gap-5">
-                <div class="font-bold cursor-pointer">
-                    LOGIN
-                </div>
-                <a href="{{route('register')}}" class="font-bold cursor-pointer">REGISTRARSE</a>
-            </div>
-        </header>
+        <div class=" flex justify-between shadow-lg">
+            <a href="/usuarios" class="font-bold cursor-pointer p-6">USUARIOS</a>
+            <a href="/register" class="font-bold cursor-pointer p-6">REGISTRARSE</a>
+        </div>
         <main class="container mx-auto mt-10">
             <h2 class="font-black text-center text-3xl mb-10">
                 @yield('titulo')
             </h2>
                 @yield('contenido')
         </main>
-        <footer class="text-center p-5 text-gray-500 font-bold uppercase">
-            Diagram - Todos los derechos reservados {{date('Y-M-d')}}
-        </footer>
     </body>
 </html>

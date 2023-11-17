@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ExportarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,14 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    return view('principal');
+    return view('auth.register');
 });
+
 
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/usuarios', [WelcomeController::class, 'index'])->name('usuarios');
+Route::delete('/usuarios/{id}/eliminar', [RegisterController::class, 'destroy'])->name('eliminar');
 
-Route::get('/muro', [PostController::class, 'index'])->name('post.index');
+Route::get('/usuarios/{id}/exportar-pdf', [ExportarController::class, 'exportarPDF'])->name('usuarios.exportar-pdf');
+

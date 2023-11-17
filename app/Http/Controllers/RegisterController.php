@@ -9,38 +9,43 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function index() {
-        return view('auth.register');
+    public function index(Request $request) {
+        $usuarios = User::all();
+        return view('auth.register', ['usuarios' => $usuarios]);
     }
+
     public function store(Request $request) {
-        // dd($request);
-        $request->request->add(['identificacion'=>Str::slug($request->identificacion)]);
+        // $request->request->add(['identificacion'=>Str::slug($request->identificacion)]);
 
         $this->validate($request, [
-            'name'=> 'required | min:3',
-            'apellidos'=> 'required | min:3',
-            'identificacion'=> 'required | min:5 | unique:users',
-            'email'=> 'required | min:5',
-            'password'=> 'required | min:3'
+            'nombre'=> 'required | min:3',
+            'identificacion'=> 'required | min:3 | unique:users',
+            'numero_telefono'=> 'required | min:5',
+            'direccion'=> 'required | min:2'
         ]);
 
         User::create([
-            'name'=> $request->name,
-            'apellidos'=> $request->apellidos,
+            'nombre'=> $request->nombre,
             'identificacion'=> $request->identificacion,
-            'email'=> $request->email,
-            'password'=> Hash::make($request->password),
+            'numero_telefono'=> $request->numero_telefono,
+            'direccion'=> $request->direccion,
         ]);
 
-        //autenticar
-        // auth()->attempt([
-        //     'email'=>$request->email,
-        //     'password'=>$request->password
-        // ]);
-
-        auth()->attempt($request->only('email','password'));
-
-        //redireccionar
-        return redirect() -> route('post.index');
+        $usuarios = User::all();
+        return view('welcome', ['usuarios' => $usuarios]);
     }
+    public function destroy($id) {
+        $usuario = User::find($id);
+    
+        if (!$usuario) {
+            abort(404);
+        }
+        $usuario->delete();
+    
+        return view('welcome', ['usuarios' => $usuarios]);
+
+    }
+    
+
+
 }
